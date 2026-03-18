@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Book a Reading – Mary Blue</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Cinzel:wght@400;500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #dce8ec;
+      --text: #2a3540;
+      --text-muted: #4e6270;
+      --accent: #8a9fac;
+      --divider: #b8cdd5;
+      --white: #f5f9fa;
+      --light-blue: #7aaabb;
+    }
+
+    body {
+      font-family: 'Jost', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 22px 48px;
+    }
+    .nav-logo {
+      font-family: 'Cinzel', serif;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--text);
+      text-decoration: none;
+    }
+    .nav-links {
+      display: flex;
+      gap: 40px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-family: 'Cinzel', serif;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--text);
+      text-decoration: none;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    /* PAGE LAYOUT */
+    .page {
+      border-top: 1px solid var(--divider);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: calc(100vh - 68px);
+    }
+
+    /* LEFT PANEL — info */
+    .left {
+      padding: 60px 48px;
+      border-right: 1px solid var(--divider);
+      display: flex;
+      flex-direction: column;
+      gap: 48px;
+    }
+
+    .eyebrow {
+      font-family: 'Cinzel', serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: .26em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .left-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 72px;
+      font-weight: 300;
+      font-style: italic;
+      line-height: .92;
+      color: var(--text);
+    }
+
+    .left-body {
+      font-family: 'Jost', sans-serif;
+      font-size: 14px;
+      font-weight: 300;
+      line-height: 1.75;
+      color: var(--text-muted);
+      max-width: 340px;
+    }
+
+    /* Reading options in left panel */
+    .readings-summary {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      border-top: 1px solid var(--divider);
+    }
+
+    .reading-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      padding: 18px 0;
+      border-bottom: 1px solid var(--divider);
+      gap: 12px;
+    }
+
+    .reading-row-left {
+      display: flex;
+      align-items: baseline;
+      gap: 14px;
+    }
+
+    .reading-star {
+      font-size: 13px;
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .reading-name {
+      font-family: 'Cinzel', serif;
+      font-size: 11px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--text);
+    }
+
+    .reading-duration-tag {
+      font-family: 'Jost', sans-serif;
+      font-size: 11px;
+      font-weight: 300;
+      color: var(--text-muted);
+      letter-spacing: .05em;
+    }
+
+    .reading-price-tag {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--text);
+      white-space: nowrap;
+    }
+
+    /* RIGHT PANEL — form */
+    .right {
+      padding: 60px 48px;
+      display: flex;
+      flex-direction: column;
+      gap: 36px;
+    }
+
+    .form-eyebrow {
+      font-family: 'Cinzel', serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: .26em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .form-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 38px;
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.15;
+      color: var(--text);
+      margin-top: -18px;
+    }
+
+    /* STEPS */
+    .form-section {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .form-label {
+      font-family: 'Cinzel', serif;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .form-input {
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid var(--divider);
+      padding: 10px 0;
+      font-family: 'Jost', sans-serif;
+      font-size: 15px;
+      font-weight: 300;
+      color: var(--text);
+      width: 100%;
+      outline: none;
+      transition: border-color .2s;
+      caret-color: var(--light-blue);
+    }
+    .form-input::placeholder { color: var(--accent); font-style: italic; }
+    .form-input:focus { border-color: var(--light-blue); }
+
+    /* Reading selection cards */
+    .reading-options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .reading-option {
+      border: 1px solid var(--divider);
+      padding: 18px 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      transition: border-color .2s, background .2s;
+      position: relative;
+    }
+
+    .reading-option:hover {
+      border-color: var(--accent);
+      background: rgba(122, 170, 187, 0.06);
+    }
+
+    .reading-option.selected {
+      border-color: var(--light-blue);
+      background: rgba(122, 170, 187, 0.1);
+    }
+
+    .reading-option input[type="radio"] {
+      display: none;
+    }
+
+    .radio-indicator {
+      width: 14px;
+      height: 14px;
+      border: 1px solid var(--divider);
+      border-radius: 50%;
+      flex-shrink: 0;
+      transition: border-color .2s;
+      position: relative;
+    }
+
+    .reading-option.selected .radio-indicator {
+      border-color: var(--light-blue);
+    }
+
+    .reading-option.selected .radio-indicator::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 6px;
+      height: 6px;
+      background: var(--light-blue);
+      border-radius: 50%;
+    }
+
+    .option-star {
+      font-size: 12px;
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .option-info {
+      flex: 1;
+    }
+
+    .option-type {
+      font-family: 'Cinzel', serif;
+      font-size: 11px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--text);
+    }
+
+    .option-duration {
+      font-family: 'Jost', sans-serif;
+      font-size: 12px;
+      font-weight: 300;
+      color: var(--text-muted);
+      margin-top: 3px;
+    }
+
+    .option-price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--text);
+    }
+
+    /* Textarea */
+    .form-textarea {
+      background: transparent;
+      border: 1px solid var(--divider);
+      padding: 14px 16px;
+      font-family: 'Jost', sans-serif;
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--text);
+      width: 100%;
+      outline: none;
+      transition: border-color .2s;
+      resize: none;
+      height: 100px;
+      line-height: 1.7;
+      caret-color: var(--light-blue);
+    }
+    .form-textarea::placeholder { color: var(--accent); font-style: italic; }
+    .form-textarea:focus { border-color: var(--light-blue); }
+
+    /* Submit */
+    .submit-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 8px;
+    }
+
+    .submit-note {
+      font-family: 'Jost', sans-serif;
+      font-size: 12px;
+      font-weight: 300;
+      color: var(--text-muted);
+      font-style: italic;
+      max-width: 200px;
+      line-height: 1.5;
+    }
+
+    .submit-btn {
+      font-family: 'Cinzel', serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--text);
+      background: transparent;
+      border: 1px solid var(--text);
+      padding: 14px 28px;
+      cursor: pointer;
+      transition: background .2s, color .2s;
+    }
+
+    .submit-btn:hover {
+      background: var(--text);
+      color: var(--white);
+    }
+
+    /* Success state */
+    .success-overlay {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: 20px;
+      flex: 1;
+      padding: 40px;
+    }
+
+    .success-overlay.visible { display: flex; }
+    .form-inner.hidden { display: none; }
+
+    .success-glyph {
+      font-size: 28px;
+      color: var(--accent);
+      letter-spacing: .2em;
+    }
+
+    .success-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 42px;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--text);
+    }
+
+    .success-body {
+      font-family: 'Jost', sans-serif;
+      font-size: 14px;
+      font-weight: 300;
+      line-height: 1.75;
+      color: var(--text-muted);
+      max-width: 300px;
+    }
+
+    footer {
+      border-top: 1px solid var(--divider);
+      padding: 20px 48px;
+      font-family: 'Cinzel', serif;
+      font-size: 11px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    @media (max-width: 768px) {
+      nav { padding: 18px 24px; }
+      .nav-links { display: none; }
+      .page { grid-template-columns: 1fr; }
+      .left { padding: 40px 24px; border-right: none; border-bottom: 1px solid var(--divider); gap: 32px; }
+      .right { padding: 40px 24px; }
+      .left-heading { font-size: 52px; }
+      footer { padding: 20px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Mary Blue</a>
+  <ul class="nav-links">
+    <li><a href="index.html#readings">Readings</a></li>
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="book.html">Book</a></li>
+  </ul>
+</nav>
+
+<div class="page">
+
+  <!-- LEFT: info -->
+  <div class="left">
+    <p class="eyebrow">Book a Reading</p>
+
+    <div>
+      <h1 class="left-heading">Let's begin<br/>together.</h1>
+    </div>
+
+    <p class="left-body">
+      Each session is held with care and intention. Share a little about yourself and what you're seeking — I'll be in touch within 48 hours to confirm your booking.
+    </p>
+
+    <div class="readings-summary">
+      <div class="reading-row">
+        <div class="reading-row-left">
+          <span class="reading-star">✶</span>
+          <div>
+            <div class="reading-name">Focused Reading</div>
+            <div class="reading-duration-tag">30 minutes</div>
+          </div>
+        </div>
+        <div class="reading-price-tag">$77 CAD</div>
+      </div>
+      <div class="reading-row">
+        <div class="reading-row-left">
+          <span class="reading-star">✷</span>
+          <div>
+            <div class="reading-name">Full Reading</div>
+            <div class="reading-duration-tag">60 minutes</div>
+          </div>
+        </div>
+        <div class="reading-price-tag">$144 CAD</div>
+      </div>
+      <div class="reading-row">
+        <div class="reading-row-left">
+          <span class="reading-star">✹</span>
+          <div>
+            <div class="reading-name">Extended Reading</div>
+            <div class="reading-duration-tag">90 minutes</div>
+          </div>
+        </div>
+        <div class="reading-price-tag">$212 CAD</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT: form -->
+  <div class="right">
+    <div class="form-inner" id="formInner">
+      <p class="form-eyebrow">Your Details</p>
+      <p class="form-title">Tell me a little<br/>about yourself.</p>
+
+      <div class="form-section">
+        <label class="form-label" for="name">Your Name</label>
+        <input class="form-input" id="name" type="text" placeholder="First & last name" autocomplete="name" />
+      </div>
+
+      <div class="form-section">
+        <label class="form-label" for="email">Email Address</label>
+        <input class="form-input" id="email" type="email" placeholder="your@email.com" autocomplete="email" />
+      </div>
+
+      <div class="form-section">
+        <label class="form-label">Reading Type</label>
+        <div class="reading-options" id="readingOptions">
+
+          <label class="reading-option" onclick="selectOption(this)">
+            <input type="radio" name="reading" value="focused" />
+            <div class="radio-indicator"></div>
+            <span class="option-star">✶</span>
+            <div class="option-info">
+              <div class="option-type">Focused Reading</div>
+              <div class="option-duration">30 minutes · A specific question or check-in</div>
+            </div>
+            <div class="option-price">$77</div>
+          </label>
+
+          <label class="reading-option" onclick="selectOption(this)">
+            <input type="radio" name="reading" value="full" />
+            <div class="radio-indicator"></div>
+            <span class="option-star">✷</span>
+            <div class="option-info">
+              <div class="option-type">Full Reading</div>
+              <div class="option-duration">60 minutes · Space to go deeper</div>
+            </div>
+            <div class="option-price">$144</div>
+          </label>
+
+          <label class="reading-option" onclick="selectOption(this)">
+            <input type="radio" name="reading" value="extended" />
+            <div class="radio-indicator"></div>
+            <span class="option-star">✹</span>
+            <div class="option-info">
+              <div class="option-type">Extended Reading</div>
+              <div class="option-duration">90 minutes · Tarot, astrology & more</div>
+            </div>
+            <div class="option-price">$212</div>
+          </label>
+
+        </div>
+      </div>
+
+      <div class="form-section">
+        <label class="form-label" for="intention">Your Intention <span style="font-style:italic;letter-spacing:0;text-transform:none;font-family:'Jost'">— optional</span></label>
+        <textarea class="form-textarea" id="intention" placeholder="What's on your heart? Is there a theme, question, or area of life you'd like to focus on?"></textarea>
+      </div>
+
+      <!-- hidden field so Formspree knows the reading type -->
+      <input type="hidden" id="reading-hidden" name="reading_type" value="" />
+
+      <div class="submit-row">
+        <p class="submit-note">I'll confirm your booking within 48 hours.</p>
+        <button class="submit-btn" id="submitBtn" type="button" onclick="handleSubmit()">Send Request</button>
+      </div>
+      <p id="formError" style="display:none; font-family:'Jost',sans-serif; font-size:12px; font-weight:300; color:#7aaabb; font-style:italic; margin-top:8px; text-align:right;">Something went wrong — please try again shortly.</p>
+    </div>
+
+    <div class="success-overlay" id="successOverlay">
+      <div class="success-glyph">✶ ✷ ✹</div>
+      <p class="success-heading">Your request<br/>is received.</p>
+      <p class="success-body">Thank you for reaching out. I'll be in touch within 48 hours to confirm your reading and share next steps.</p>
+    </div>
+  </div>
+
+</div>
+
+<footer>© Mary Blue &nbsp;·&nbsp; Tarot · Astrology · Intuitive Guidance</footer>
+
+<script>
+  // ─────────────────────────────────────────────
+  // STEP 1: Sign up free at https://formspree.io
+  // STEP 2: Create a new form, set your email
+  // STEP 3: Copy your form ID (looks like "xpwzabcd")
+  // STEP 4: Paste it below, replacing YOUR_FORM_ID
+  // ─────────────────────────────────────────────
+  const FORMSPREE_ID = 'https://formspree.io/f/xlgpapwg';
+
+  function selectOption(el) {
+    document.querySelectorAll('.reading-option').forEach(o => o.classList.remove('selected'));
+    el.classList.add('selected');
+    el.querySelector('input[type="radio"]').checked = true;
+    // sync hidden field so Formspree receives the reading type by name
+    document.getElementById('reading-hidden').value = el.querySelector('.option-type').textContent;
+  }
+
+  async function handleSubmit() {
+    const name    = document.getElementById('name').value.trim();
+    const email   = document.getElementById('email').value.trim();
+    const reading = document.querySelector('input[name="reading"]:checked');
+
+    // Validation
+    if (!name || !email || !reading) {
+      if (!name)    highlight(document.getElementById('name'));
+      if (!email)   highlight(document.getElementById('email'));
+      if (!reading) highlight(document.getElementById('readingOptions'));
+      return;
+    }
+
+    // Disable button while submitting
+    const btn = document.getElementById('submitBtn');
+    btn.textContent = 'Sending…';
+    btn.disabled = true;
+    document.getElementById('formError').style.display = 'none';
+
+    const payload = {
+      name:         name,
+      email:        email,
+      reading_type: document.getElementById('reading-hidden').value,
+      intention:    document.getElementById('intention').value.trim() || '—',
+    };
+
+    try {
+      const res = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body:    JSON.stringify(payload),
+      });
+
+      if (res.ok) {
+        document.getElementById('formInner').classList.add('hidden');
+        document.getElementById('successOverlay').classList.add('visible');
+      } else {
+        throw new Error('Non-OK response');
+      }
+    } catch {
+      btn.textContent = 'Send Request';
+      btn.disabled = false;
+      document.getElementById('formError').style.display = 'block';
+    }
+  }
+
+  function highlight(el) {
+    el.style.borderColor = 'var(--light-blue)';
+    setTimeout(() => { el.style.borderColor = ''; }, 1400);
+  }
+</script>
+</body>
+</html>
